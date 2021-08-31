@@ -1,11 +1,10 @@
 # Image-Classification-as-a-Service
 
 
-Problem statement
 The aim of this project is to build an elastic application that can automatically scale out and scale in on demand. The application provides an image Classification service to users. Images uploaded by the users are classified and the corresponding results along with the input image are stored in Amazon S3 buckets.
 
 
-Design and implementation
+#Design and implementation
 
 1. Web-Tier: On web-tier start, the user selects multiple images on the web-tier and uploads them. The web-tier processes and sends the request to the S3 'input' bucket, where the images are stored, and a URL is generated for the location of the stored image. The URL is returned to the web-tier. The web-tier then passes the input-app to the SQS Launch Queue.
 2. Launch Phase in in App-Controller: The Launch Queue is used to maintain all the input image URLs uploaded by the user. The Launch controller is used to scale up the instances based on the load. The launch controller checks the launch queue and creates EC2 instances of the image-classifier. Here the launch controller also keeps a check on the status of EC2 instances and maintains a count of ‘running’ and ‘free’ instances of image-classifier. It creates a maximum of 20 instances when the load is too high.
@@ -17,7 +16,7 @@ Design and implementation
 
 
 
-Autoscaling:
+#Autoscaling:
 
 Scaling in and scaling out is done at the application tier. Depending on the current load we perform the autoscaling. We ensure autoscaling with following components:
 
