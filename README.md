@@ -14,8 +14,12 @@ Figure 2
 4. Monitor Phase in App-Controller: The monitor controller is used for handling multiple error scenarios. It monitors the health of instances for a given input and terminates them if it can’t handle the load. It monitors the Monitor Queue and fetches the image and instance id from it. It then checks for output on the S3 bucket for the given input after some duration. If there’s no Output for the given Input it terminates the instance and sends the message back to the Launch Queue. For a given image this would happen for a maximum of 3 tries after which it sends a message to Output Queue which states an error for giving an image.
 5. Output Phase in App-Controller: The web-tier fetches the output result data from the Output Queue and displays it to the user.
 
+
+
 Autoscaling:
+
 Scaling in and scaling out is done at the application tier. Depending on the current load we perform the autoscaling. We ensure autoscaling with following components:
+
 
 SQS: SQS decouples the components of our application, and queues the requests received by the web tier. It keeps the request in the queue till it is processed by EC2 instances. We have an upper limit of 20 on the number of instances in running state at any point of time, thus SQS queues all the pending requests when it reaches this threshold. We are using the length of the queue as the metric to determine the current load and perform scaling in and scaling out of compute resources. We check the length of the queue, the current number of running instances which are processing images, and then decide how many new instances are to be spawned. In order to avoid making continuous requests to the SQS queue we are using long polling, which reduces the cost of using SQS by eliminating the number of empty responses.
 
