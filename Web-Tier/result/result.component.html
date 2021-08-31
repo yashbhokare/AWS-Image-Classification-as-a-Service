@@ -1,0 +1,20 @@
+    <div class="background-image"></div>
+    <div fxFlex fxLayout="row" class="result-class">
+        <div class="image-overview" fxLayout="row" *ngFor="let image of imageDataSet; let i = index" >
+            <div fxLayout="column" style="align-items: center;">
+                <img class="image-display" [ngClass]="{'image-display-animate': image.output}" mat-card-image src={{image.value}}>
+            </div>
+           
+
+            <div  class="output-display">
+                <mat-chip-list style="margin: -5px;">
+                    <mat-chip>{{image.inputString}}</mat-chip>
+                    <mat-chip *ngIf="image.output">{{image.output}}</mat-chip>
+                    <!-- <mat-chip>{{image.output}}</mat-chip>  -->
+                </mat-chip-list>
+            </div>     
+        </div>
+
+    </div>
+    <!-- <div [ngStyle]="{background-image: 'url(outputData[i])'}"></div> -->
+
