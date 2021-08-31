@@ -1,0 +1,38 @@
+<div *ngIf="!uploadSuccess" fxFlex fxLayout="column">
+    <div>
+        <div class="topic-header">
+            <h1>Image Classifier</h1>
+        </div>
+        <div class="select-button">
+            <button mat-raised-button (click)="fileInput.click()">
+                <mat-icon style="padding-bottom: 3px;">add</mat-icon>
+                Select File
+            </button>
+            <input hidden (change)="onSelectFile($event)" multiple #fileInput type="file" id="file">
+        </div>
+    </div>
+    <div fxFlex fxLayout="row" class="result-class">
+        <div class="image-overview" fxLayout="row" *ngFor="let url of imageUrls; let i = index">
+            <div fxLayout="column" style="align-items: center">
+                <img class="image-display" mat-card-image [src]="url" />
+                <mat-chip-list>
+                    <mat-chip>{{ this.imageFiles[i].name }}</mat-chip>
+                </mat-chip-list>  
+                
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!imageUrls.length==0" class="upload-button">
+        <button style="width: 200px;" (click)="uploadFiles()" mat-raised-button>
+            Upload
+            <mat-icon style="padding-left: 15px;padding-bottom: 3px;">cloud_upload</mat-icon>
+        </button>
+    </div>
+
+</div>
+
+
+
+<div *ngIf="uploadSuccess">
+    <app-result [imageDataSet]="imagesDataSet"></app-result>
+</div>
