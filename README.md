@@ -18,6 +18,7 @@ Design and implementation
 
 
 Autoscaling:
+
 Scaling in and scaling out is done at the application tier. Depending on the current load we perform the autoscaling. We ensure autoscaling with following components:
 
 
